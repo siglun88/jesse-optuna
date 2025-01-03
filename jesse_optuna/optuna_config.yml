@@ -20,7 +20,6 @@ fee: 0.001
 type: 'futures'
 futures_leverage: 1
 futures_leverage_mode: cross
-settlement_currency: USDT
 warm_up_candles: 240
 exchange: Binance
 symbol: 'BTC-USDT'

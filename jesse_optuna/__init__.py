@@ -217,23 +217,6 @@ def validate_cwd() -> None:
         exit()
 
 
-def get_candles_with_cache(exchange: str, symbol: str, start_date: str, finish_date: str) -> np.ndarray:
-    path = pathlib.Path('storage/jesse-optuna')
-    path.mkdir(parents=True, exist_ok=True)
-
-    cache_file_name = f"{exchange}-{symbol}-1m-{start_date}-{finish_date}.pickle"
-    cache_file = pathlib.Path(f'storage/jesse-optuna/{cache_file_name}')
-
-    if cache_file.is_file():
-        with open(f'storage/jesse-optuna/{cache_file_name}', 'rb') as handle:
-            candles = pickle.load(handle)
-    else:
-        candles = get_candles(exchange, symbol, '1m', start_date, finish_date)
-        with open(f'storage/jesse-optuna/{cache_file_name}', 'wb') as handle:
-            pickle.dump(candles, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-    return candles
-
 
 def backtest_function(start_date, finish_date, hp, cfg):
 
@@ -314,7 +297,7 @@ def backtest_function(start_date, finish_date, hp, cfg):
     }
 
 
-    backtest_data = backtest(config, route, extra_routes, trading_candles, warmup_candles, hyperparameters = hp)['metrics']
+    backtest_data = backtest(config, route, extra_routes, trading_candles, warmup_candles, hyperparameters = hp, fast_mode=True)['metrics']
 
     if backtest_data['total'] == 0:
         backtest_data = {'total': 0, 'total_winning_trades': None, 'total_losing_trades': None,

@@ -305,6 +305,7 @@ def backtest_function(start_date, finish_date, hp, cfg):
     config = {
         'starting_balance': cfg['starting_balance'],
         'fee': cfg['fee'],
+        'type': cfg['type'],
         'futures_leverage': cfg['futures_leverage'],
         'futures_leverage_mode': cfg['futures_leverage_mode'],
         'exchange': cfg['exchange'],

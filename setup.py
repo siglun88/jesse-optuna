@@ -8,7 +8,8 @@ REQUIRED_PACKAGES = [
     'jesse',
     'pyyaml',
     'optuna',
-    'psutil'
+    'psutil',
+    'joblib'
 ]
 
 with open("README.md", "r", encoding="utf-8") as f:

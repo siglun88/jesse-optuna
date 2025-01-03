@@ -292,7 +292,6 @@ def backtest_function(start_date, finish_date, hp, cfg):
         'futures_leverage': cfg['futures_leverage'],
         'futures_leverage_mode': cfg['futures_leverage_mode'],
         'exchange': cfg['exchange'],
-        'settlement_currency': cfg['settlement_currency'],
         'warm_up_candles': cfg['warm_up_candles']
     }
 

@@ -35,6 +35,22 @@ jesse-optuna run
 
 ```
 
+## Optuna dashboard
+
+Install and run optuna dashboard to analyze and evaluate results.
+
+```sh
+
+# Install Optuna dashboard and dependencies to make the dashboard faster
+pip install optuna-dashboard
+pip install optuna-fast-fanova gunicorn
+
+# Run optuna dashboard
+optuna-dashboard postgresql+psycopg2://jesse_user:password@postgres:5432/optuna_db
+
+```
+
+
 
 ## Disclaimer
 This software is for educational purposes only. USE THE SOFTWARE AT YOUR OWN RISK. THE AUTHORS AND ALL AFFILIATES ASSUME NO RESPONSIBILITY FOR YOUR TRADING RESULTS. Do not risk money which you are afraid to lose. There might be bugs in the code - this software DOES NOT come with ANY warranty.

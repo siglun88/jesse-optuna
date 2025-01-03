@@ -1,3 +1,5 @@
+This is a fork of cryptocoinserver/jesse-optuna, updated to be compatible with newer versions of Jesse.
+
 # Jesse optuna
 
 Only works with the new GUI version of jesse.

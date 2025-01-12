@@ -22,8 +22,13 @@ futures_leverage: 1
 futures_leverage_mode: cross
 warm_up_candles: 240
 exchange: Binance
-symbol: 'BTC-USDT'
-timeframe: '1h'
+routes:
+  0:
+    symbol: 'BTC-USDT'
+    timeframe: '1h'
+  1:
+    symbol: 'ETH-USDT'
+    timeframe: '1h'
 
 timespan-train:
   start_date: '2020-01-01'

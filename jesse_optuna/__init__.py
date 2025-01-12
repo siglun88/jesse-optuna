@@ -255,35 +255,36 @@ def backtest_function(start_date, finish_date, hp, cfg):
 
             extra_routes.append({'exchange': extra_route['exchange'], 'symbol': extra_route['symbol'],
                                  'timeframe': extra_route['timeframe']})
-            
+    routes = {}            
 
-    wu_candles, candles = get_candles(
-                            cfg['exchange'],
-                            cfg['symbol'],
-                            cfg['timeframe'],
-                            jh.date_to_timestamp(start_date),
-                            jh.date_to_timestamp(finish_date),
-                            cfg['warm_up_candles'],
-                            True,
-                            True
-                        )
+    for route in cfg['routes'].items():
+        wu_candles, candles = get_candles(
+                                cfg['exchange'],
+                                route['symbol'],
+                                route['timeframe'],
+                                jh.date_to_timestamp(start_date),
+                                jh.date_to_timestamp(finish_date),
+                                cfg['warm_up_candles'],
+                                True,
+                                True
+                            )
 
-                
-    trading_candles[jh.key(cfg['exchange'], cfg['symbol'])] = {
-        'exchange': cfg['exchange'],
-        'symbol': cfg['symbol'],
-        'candles': candles,
-    }
+                    
+        trading_candles[jh.key(cfg['exchange'], route['symbol'])] = {
+            'exchange': cfg['exchange'],
+            'symbol': route['symbol'],
+            'candles': candles,
+        }
 
-    warmup_candles[jh.key(cfg['exchange'], cfg['symbol'])] = {
-        'exchange': cfg['exchange'],
-        'symbol': cfg['symbol'],
-        'candles': wu_candles,
-    }
+        warmup_candles[jh.key(cfg['exchange'], route['symbol'])] = {
+            'exchange': cfg['exchange'],
+            'symbol': route['symbol'],
+            'candles': wu_candles,
+        }
 
 
-    route = [{'exchange': cfg['exchange'], 'strategy': cfg['strategy_name'], 'symbol': cfg['symbol'],
-              'timeframe': cfg['timeframe']}]
+        routes.append({'exchange': cfg['exchange'], 'strategy': cfg['strategy_name'], 'symbol': route['symbol'],
+                'timeframe': route['timeframe']})
 
     config = {
         'starting_balance': cfg['starting_balance'],
@@ -295,8 +296,11 @@ def backtest_function(start_date, finish_date, hp, cfg):
         'warm_up_candles': cfg['warm_up_candles']
     }
 
+    fast_mode = False
+    if len(cfg['routes']) == 1:
+        fast_mode = True
 
-    backtest_data = backtest(config, route, extra_routes, trading_candles, warmup_candles, hyperparameters = hp, fast_mode=True)['metrics']
+    backtest_data = backtest(config, routes, extra_routes, trading_candles, warmup_candles, hyperparameters = hp, fast_mode=fast_mode)['metrics']
 
     if backtest_data['total'] == 0:
         backtest_data = {'total': 0, 'total_winning_trades': None, 'total_losing_trades': None,

@@ -299,11 +299,7 @@ def backtest_function(start_date, finish_date, hp, cfg):
         'warm_up_candles': cfg['warm_up_candles']
     }
 
-    fast_mode = False
-    if len(cfg['routes']) == 1:
-        fast_mode = True
-
-    backtest_data = backtest(config, routes, extra_routes, trading_candles, warmup_candles, hyperparameters = hp, fast_mode=fast_mode)['metrics']
+    backtest_data = backtest(config, routes, extra_routes, trading_candles, warmup_candles, hyperparameters = hp, fast_mode=True)['metrics']
 
     if backtest_data['total'] == 0:
         backtest_data = {'total': 0, 'total_winning_trades': None, 'total_losing_trades': None,

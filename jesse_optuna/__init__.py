@@ -257,7 +257,7 @@ def backtest_function(start_date, finish_date, hp, cfg):
 
             extra_routes.append({'exchange': extra_route['exchange'], 'symbol': extra_route['symbol'],
                                  'timeframe': extra_route['timeframe']})
-    routes = {}            
+    routes = []            
 
     for route in cfg['routes'].items():
         route = route[1]

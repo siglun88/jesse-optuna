@@ -62,9 +62,10 @@ def create_db(db_name: str) -> None:
 def run() -> None:
     validate_cwd()
 
-    symbols = "-".join(f"{route['symbol']}-{route['timeframe']}" for route in cfg['routes'].values())
+    
 
     cfg = get_config()
+    symbols = "-".join(f"{route['symbol']}-{route['timeframe']}" for route in cfg['routes'].values())
     study_name = f"{cfg['strategy_name']}-{cfg['exchange']}-{symbols}"
     storage = f"postgresql://{cfg['postgres_username']}:{cfg['postgres_password']}@{cfg['postgres_host']}:{cfg['postgres_port']}/{cfg['postgres_db_name']}"
 

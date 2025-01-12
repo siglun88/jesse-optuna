@@ -260,6 +260,7 @@ def backtest_function(start_date, finish_date, hp, cfg):
     routes = {}            
 
     for route in cfg['routes'].items():
+        route = route[1]
         wu_candles, candles = get_candles(
                                 cfg['exchange'],
                                 route['symbol'],

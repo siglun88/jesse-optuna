@@ -62,8 +62,10 @@ def create_db(db_name: str) -> None:
 def run() -> None:
     validate_cwd()
 
+    symbols = "-".join(f"{route['symbol']}-{route['timeframe']}" for route in cfg['routes'].values())
+
     cfg = get_config()
-    study_name = f"{cfg['strategy_name']}-{cfg['exchange']}-{cfg['symbol']}-{cfg['timeframe']}"
+    study_name = f"{cfg['strategy_name']}-{cfg['exchange']}-{symbols}"
     storage = f"postgresql://{cfg['postgres_username']}:{cfg['postgres_password']}@{cfg['postgres_host']}:{cfg['postgres_port']}/{cfg['postgres_db_name']}"
 
     sampler = optuna.samplers.NSGAIISampler(population_size=cfg['population_size'], mutation_prob=cfg['mutation_prob'],
@@ -89,8 +91,7 @@ def run() -> None:
 
     study.set_user_attr("strategy_name", cfg['strategy_name'])
     study.set_user_attr("exchange", cfg['exchange'])
-    study.set_user_attr("symbol", cfg['symbol'])
-    study.set_user_attr("timeframe", cfg['timeframe'])
+    study.set_user_attr("symbol", symbols)
 
 
     study.optimize(objective, n_jobs=cfg['n_jobs'], n_trials=cfg['n_trials'])
